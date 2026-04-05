@@ -1,593 +1,554 @@
-"use client";
+"use client"
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useEffect, useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import {
-  Phone, Mail, ShieldCheck, TrendingUp, GraduationCap,
-  ArrowRight, CheckCircle2, Award, Heart, Star,
-  HelpCircle, ChevronDown, Landmark, Sparkles, Users, BadgeCheck
-} from "lucide-react";
+  Phone,
+  Mail,
+  ShieldCheck,
+  TrendingUp,
+  GraduationCap,
+  ArrowRight,
+  CheckCircle2,
+  Award,
+  Heart,
+  Star,
+  Plus,
+  Activity,
+  Briefcase,
+  Landmark,
+  UserCheck,
+  MapPin,
+  Calendar,
+  Stamp,
+} from "lucide-react"
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger)
 }
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Functional constants for real-world use
+  const PHONE_NUMBER = "+919824215296"
+  const EMAIL_ADDRESS = "bipinkuhikar@gmail.com"
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Entrance animations for the hero
       gsap.from(".animate-in", {
-        y: 50,
+        y: 40,
         opacity: 0,
-        duration: 1.2,
-        stagger: 0.12,
-        ease: "power4.out",
-      });
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
+      })
 
+      // Scroll reveal for all tactile cards
       gsap.utils.toArray<Element>(".reveal").forEach((elem) => {
         gsap.from(elem, {
-          y: 35,
+          y: 30,
           opacity: 0,
-          duration: 0.9,
-          ease: "power3.out",
+          duration: 0.8,
           scrollTrigger: {
             trigger: elem,
-            start: "top 88%",
-            toggleActions: "play none none none",
+            start: "top 85%",
           },
-        });
-      });
+        })
+      })
+    }, containerRef)
+    return () => ctx.revert()
+  }, [])
 
-      gsap.to(".glow", {
-        scale: 1.15,
-        duration: 4,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(".pulse-ring", {
-        scale: 2,
-        opacity: 0,
-        duration: 1.8,
-        repeat: -1,
-        ease: "power2.out",
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const features = [
+  const benefits = [
     {
+      title: "Education corpus",
       icon: GraduationCap,
-      title: "Education Corpus",
-      desc: "Build a dedicated fund for college, abroad studies, or professional degrees — ready exactly when your child needs it.",
+      color: "text-indigo-600",
+      bg: "bg-indigo-50",
+      border: "border-indigo-100",
+      accent: "group-hover:text-indigo-600",
     },
     {
+      title: "Family shield",
       icon: ShieldCheck,
-      title: "Family Protection",
-      desc: "If something happens to you, the policy continues on its own. Your child's future remains fully funded — no matter what.",
+      color: "text-rose-600",
+      bg: "bg-rose-50",
+      border: "border-rose-100",
+      accent: "group-hover:text-rose-600",
     },
     {
+      title: "Tax efficiency",
       icon: TrendingUp,
-      title: "Tax-Free Returns",
-      desc: "Save tax on your investment today and receive completely tax-free returns at maturity. A win on both ends.",
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      border: "border-emerald-100",
+      accent: "group-hover:text-emerald-600",
     },
     {
-      icon: Landmark,
-      title: "LIC Backed & Guaranteed",
-      desc: "Supported by the Government of India through LIC — one of the most trusted financial institutions in the country.",
-    },
-    {
+      title: "Marriage fund",
       icon: Heart,
-      title: "Marriage Planning",
-      desc: "An optional add-on that sets aside a lumpsum for your child's wedding, so that special day remains stress-free.",
+      color: "text-pink-600",
+      bg: "bg-pink-50",
+      border: "border-pink-100",
+      accent: "group-hover:text-pink-600",
     },
     {
-      icon: Sparkles,
-      title: "Flexible Payments",
-      desc: "Choose how you want to invest — monthly, quarterly or yearly. Plans available starting from just ₹2,000 per month.",
-    },
-  ];
-
-  const faq = [
-    {
-      q: "What is the best age to start?",
-      a: "The earlier you start, the better. Beginning at birth to age 5 keeps premiums low and maximises the power of compounding over time.",
+      title: "Guaranteed payout",
+      icon: Landmark,
+      color: "text-amber-600",
+      bg: "bg-amber-50",
+      border: "border-amber-100",
+      accent: "group-hover:text-amber-600",
     },
     {
-      q: "Is the investment safe?",
-      a: "Yes. These are LIC plans — non-market linked and backed by the Government of India, offering guaranteed returns and full security.",
+      title: "Wealth builder",
+      icon: Award,
+      color: "text-blue-600",
+      bg: "bg-blue-50",
+      border: "border-blue-100",
+      accent: "group-hover:text-blue-600",
     },
-    {
-      q: "Can I access the money before maturity?",
-      a: "Yes, the policy offers a loan facility and partial withdrawals for emergencies after the initial lock-in period.",
-    },
-    {
-      q: "What if I miss a payment?",
-      a: "There is a grace period, and lapsed policies can be revived. You also have the option to convert to a paid-up policy to protect your investment.",
-    },
-  ];
+  ]
 
   return (
     <div
       ref={containerRef}
-      className="min-h-screen bg-white text-slate-800 font-sans relative overflow-x-hidden"
+      className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-100"
     >
-      {/* Background blobs */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] bg-emerald-400/8 rounded-full blur-[140px] glow" />
-        <div
-          className="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-indigo-400/8 rounded-full blur-[120px] glow"
-          style={{ animationDelay: "1.5s" }}
-        />
-      </div>
+      {/* ── STICKY NAVBAR ───────────────────────────────── */}
+      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl animate-in items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
 
-      {/* Mobile sticky call button */}
-      <div className="fixed bottom-6 right-6 z-50 md:hidden">
-        <a
-          href="tel:+919824215296"
-          className="w-16 h-16 bg-emerald-500 text-white rounded-full shadow-2xl shadow-emerald-500/40 flex items-center justify-center border-4 border-white"
-        >
-          <Phone className="w-7 h-7" />
-        </a>
-      </div>
+          {/* Brand — left */}
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-600 shadow-md shadow-emerald-600/25">
+              <ShieldCheck className="h-4 w-4 text-white" />
+            </div>
+            <div>
+              <p className="text-[15px] leading-none font-black tracking-tight text-slate-900">
+                B. Kuhikar
+              </p>
+              <p className="mt-0.5 text-[10px] font-semibold text-emerald-600">
+                Irda certified advisor
+              </p>
+            </div>
+          </div>
 
-      {/* Navbar */}
-      <nav className="relative z-40 px-6 py-5 max-w-7xl mx-auto flex justify-between items-center animate-in">
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30">
-            <ShieldCheck className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <p className="font-bold text-slate-900 leading-none text-lg">Bipinkumar Kuhikar</p>
-            <p className="text-xs text-slate-400 mt-0.5">Insurance Advisor · IRDA Certified</p>
-          </div>
-        </div>
+          {/* Actions — right */}
+          <div className="flex items-center gap-2">
+            {/* Trust pill: only lg+ */}
+            <div className="hidden items-center gap-1.5 rounded-full border border-slate-100 bg-slate-50 px-3 py-1.5 text-[11px] font-bold text-slate-500 lg:flex">
+              <Star size={11} className="fill-amber-400 text-amber-400" />
+              Lic authorised since 2014
+            </div>
 
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-1.5 mr-2">
-            <span className="relative flex h-2 w-2">
-              <span className="pulse-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="text-xs text-slate-500 font-medium">Available now</span>
+            {/* Phone icon — mobile only (up to md) */}
+            <a
+              href={`tel:${PHONE_NUMBER}`}
+              aria-label="Call now"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-700 transition-all active:scale-90 md:hidden"
+            >
+              <Phone size={15} />
+            </a>
+
+            {/* Full number — md+ */}
+            <a
+              href={`tel:${PHONE_NUMBER}`}
+              className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow-sm transition-all hover:border-emerald-200 hover:text-emerald-600 md:flex"
+            >
+              <Phone size={14} /> +91 98242 15296
+            </a>
+
+            {/* CTA — always visible, scales down on mobile */}
+            <a
+              href={`tel:${PHONE_NUMBER}`}
+              className="rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-emerald-600/20 transition-all active:scale-95 hover:bg-emerald-700 sm:rounded-2xl sm:px-5 sm:py-2.5 sm:text-sm"
+            >
+              Get a plan
+            </a>
           </div>
-          <a
-            href="tel:+919824215296"
-            className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700 hover:shadow-md transition-all"
-          >
-            <Phone className="w-4 h-4" />
-            +91 98242 15296
-          </a>
-          <a
-            href="mailto:bipinkuhikar@gmail.com"
-            className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-slate-900 rounded-xl text-sm font-semibold text-white hover:bg-slate-800 transition-all shadow-lg"
-          >
-            <Mail className="w-4 h-4" />
-            Write to me
-          </a>
+
         </div>
       </nav>
 
-      {/* ── HERO ────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 pt-16 pb-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-        {/* Left copy */}
-        <div className="space-y-8 animate-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-full text-sm font-semibold">
-            <Award className="w-4 h-4" />
-            Child Future Investment Plan
+      {/* ── HERO SECTION ────────────────────────────────── */}
+      <section className="mx-auto grid max-w-7xl items-center gap-16 px-6 pt-12 pb-24 lg:grid-cols-2">
+        <div className="animate-in space-y-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold tracking-wide text-emerald-600 capitalize shadow-sm">
+            <UserCheck size={12} />
+            Bipinkumar Kuhikar · Investment advisor
           </div>
-
-          <h2 className="text-5xl md:text-6xl font-extrabold leading-tight text-slate-900 tracking-tight">
-            Give your child the&nbsp;
-            <span className="text-emerald-600 relative inline-block">
-              future they deserve.
-              <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 300 12" fill="none">
-                <path d="M2 10 Q150 2 298 10" stroke="#86efac" strokeWidth="3" strokeLinecap="round" />
-              </svg>
+          <h1 className="text-5xl leading-[0.95] font-black tracking-tighter text-slate-900 md:text-7xl">
+            Secure your child&apos;s <br /> legacy with <br />
+            <span className="text-emerald-600 underline decoration-emerald-100 underline-offset-[12px]">
+              expert advice.
             </span>
-          </h2>
-
-          <p className="text-lg text-slate-500 leading-relaxed max-w-lg">
-            Start small. Build big. A smart investment plan today can secure your child&apos;s education, career, and milestones — completely worry-free.
+          </h1>
+          <p className="max-w-md text-lg leading-relaxed font-medium text-slate-500">
+            I provide professional investment planning to help families build
+            guaranteed wealth and education funds through trusted Lic
+            strategies.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <a
-              href="tel:+919824215296"
-              className="flex items-center justify-center gap-3 px-8 py-4 bg-emerald-500 text-white rounded-2xl text-base font-bold shadow-xl shadow-emerald-500/30 hover:bg-emerald-600 hover:-translate-y-0.5 transition-all"
+              href={`tel:${PHONE_NUMBER}`}
+              className="rounded-2xl bg-emerald-600 px-8 py-4 text-center text-lg font-black text-white shadow-xl shadow-emerald-600/20 transition-all hover:-translate-y-1"
             >
-              <Phone className="w-5 h-5" /> Book a Free Call
+              Book consultation
             </a>
             <a
-              href="mailto:bipinkuhikar@gmail.com"
-              className="flex items-center justify-center gap-3 px-8 py-4 bg-white border-2 border-slate-200 text-slate-700 rounded-2xl text-base font-bold hover:border-emerald-300 hover:-translate-y-0.5 transition-all"
+              href="#about"
+              className="rounded-2xl border border-slate-200 bg-white px-8 py-4 text-center text-lg font-black text-slate-900 transition-all hover:bg-slate-50"
             >
-              <ArrowRight className="w-5 h-5" /> Get a Plan
+              Meet the advisor
             </a>
-          </div>
-
-          {/* Social proof */}
-          <div className="flex items-center gap-5 pt-2">
-            <div className="flex -space-x-3">
-              {["#86efac", "#6ee7b7", "#34d399"].map((bg, i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold shadow"
-                  style={{ backgroundColor: bg }}
-                >
-                  {String.fromCharCode(65 + i)}
-                </div>
-              ))}
-            </div>
-            <div>
-              <div className="flex gap-0.5 mb-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <p className="text-sm font-medium text-slate-500">
-                Trusted by <span className="text-slate-900 font-bold">500+ families</span> across India
-              </p>
-            </div>
           </div>
         </div>
 
-        {/* Right visual card */}
+        {/* Tactile Card Visual */}
         <div className="relative animate-in">
-
-          {/* Main card */}
-          <div className="bg-white rounded-3xl p-8 shadow-[0_30px_80px_rgba(0,0,0,0.10)] border border-slate-100 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-50 rounded-full translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-50 rounded-full -translate-x-1/2 translate-y-1/2" />
-
-            <div className="relative z-10 space-y-7">
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-sm text-slate-400 font-medium">Projected at age 18</p>
-                  <p className="text-4xl font-extrabold text-slate-900 tracking-tight mt-1">₹52,75,000</p>
-                  <p className="text-sm text-emerald-600 font-semibold mt-1">+ Loyalty Bonus</p>
+          <div className="group relative overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white p-8 shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
+            <div className="absolute top-0 right-0 h-32 w-32 translate-x-16 -translate-y-16 rounded-full bg-emerald-50" />
+            <div className="relative z-10">
+              <div className="mb-8 flex items-start justify-between">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white">
+                  <GraduationCap size={24} />
                 </div>
-                <div className="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                  <TrendingUp className="w-7 h-7 text-white" />
+                <div className="rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-1 text-[10px] font-black text-emerald-600 uppercase">
+                  Verified roadmap
                 </div>
               </div>
-
-              <div className="h-px bg-slate-100" />
-
-              <ul className="space-y-3">
+              <div className="mb-8 space-y-1">
+                <p className="text-xs font-bold tracking-widest text-slate-400 uppercase">
+                  Strategic growth
+                </p>
+                <h3 className="font-serif text-4xl font-black tracking-tighter text-slate-900 italic">
+                  Education fund
+                </h3>
+              </div>
+              <div className="mb-6 grid grid-cols-2 gap-4">
+                <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="mb-1 flex items-center gap-2 text-[10px] font-bold tracking-tighter text-slate-400 uppercase">
+                    <Activity size={12} /> Risk factor
+                  </div>
+                  <div className="text-xl font-black text-slate-800 italic">
+                    Zero market risk
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                  <div className="mb-1 flex items-center gap-2 text-[10px] font-bold tracking-tighter text-slate-400 uppercase">
+                    <TrendingUp size={12} /> Tax efficiency
+                  </div>
+                  <div className="text-xl font-black text-slate-800 italic">
+                    Max tax saved
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-3 pt-2">
                 {[
-                  "Tax-free returns (Section 10(10D))",
-                  "Save tax under Section 80C",
-                  "Premium waiver on parent's absence",
-                  "Payouts at age 18, 20, and 22",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm text-slate-600 font-medium">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
-                    {item}
-                  </li>
+                  "Guaranteed education payouts",
+                  "Premium waiver protection",
+                  "Tax-free maturity amounts",
+                ].map((text, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 text-sm font-bold text-slate-600"
+                  >
+                    <CheckCircle2 size={16} className="text-emerald-500" />{" "}
+                    {text}
+                  </div>
                 ))}
-              </ul>
-
-              <div className="h-px bg-slate-100" />
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-emerald-50 rounded-2xl">
-                  <p className="text-xs text-emerald-600 font-semibold mb-1">Starts from</p>
-                  <p className="text-xl font-bold text-slate-900">₹2,000 / mo</p>
-                </div>
-                <div className="p-4 bg-indigo-50 rounded-2xl">
-                  <p className="text-xs text-indigo-600 font-semibold mb-1">Entry age</p>
-                  <p className="text-xl font-bold text-slate-900">0 – 12 yrs</p>
-                </div>
               </div>
             </div>
           </div>
-
-          {/* Floating badge */}
-          <div className="absolute -top-5 -right-5 bg-amber-400 text-white rounded-2xl px-5 py-3 shadow-xl rotate-3 font-bold text-sm hidden md:block">
-            High Returns ✦
-          </div>
-
-          {/* Floating mini card */}
-          <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl border border-slate-100 hidden md:flex items-center gap-3">
-            <BadgeCheck className="w-8 h-8 text-emerald-500 shrink-0" />
-            <div>
-              <p className="text-xs text-slate-400">Certified by</p>
-              <p className="text-sm font-bold text-slate-900">IRDA, Govt. of India</p>
-            </div>
+          <div className="absolute -right-6 -bottom-6 rotate-3 rounded-2xl border-4 border-white bg-slate-900 px-6 py-4 text-sm font-black text-white shadow-2xl">
+            Irda verified advisor ✦
           </div>
         </div>
       </section>
 
-      {/* ── TRUST STRIP ─────────────────────────────────── */}
-      <section className="bg-slate-50 border-y border-slate-100 py-10 reveal">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 opacity-50">
-            {[
-              { icon: Landmark, label: "Life Insurance Corporation" },
-              { icon: BadgeCheck, label: "IRDA Authorised" },
-              { icon: Users, label: "500+ Families Served" },
-              { icon: Award, label: "10+ Years Experience" },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3 font-semibold text-slate-600">
-                <item.icon className="w-6 h-6" />
-                <span>{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHY CHOOSE ──────────────────────────────────── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
-
-          <div className="space-y-10 reveal">
-            <div className="space-y-4">
-              <p className="text-emerald-600 font-semibold text-sm">Why choose Bipinkumar?</p>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                Advice you can&nbsp;<br />trust completely.
-              </h2>
-              <p className="text-slate-500 text-lg leading-relaxed">
-                With more than 10 years of experience, Bipinkumar Kuhikar has helped thousands of parents across India plan for their children&apos;s future with confidence and clarity.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6">
-              {[
-                { n: "500+", label: "Families Served" },
-                { n: "100%", label: "Claim Settlement" },
-                { n: "10+", label: "Years of Experience" },
-                { n: "₹0", label: "Hidden Charges" },
-              ].map((stat, i) => (
-                <div key={i} className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                  <p className="text-3xl font-extrabold text-slate-900">{stat.n}</p>
-                  <p className="text-sm text-slate-500 font-medium mt-1">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-6 reveal">
-            {[
-              {
-                title: "Personalised Plan, Just for You",
-                desc: "Every family&apos;s situation is different. Bipinkumar designs a plan specific to your income, goals, and your child&apos;s age.",
-              },
-              {
-                title: "Hassle-Free Claim Assistance",
-                desc: "From paperwork to settlement, we handle everything so your family doesn&apos;t have to worry during difficult times.",
-              },
-              {
-                title: "Annual Portfolio Review",
-                desc: "A complimentary check-in every year to ensure your plan stays aligned with your growing needs.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="flex gap-5 p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
-              >
-                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 text-base">{item.title}</h4>
-                  <p className="text-sm text-slate-500 font-medium mt-1 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: item.desc }}
-                  />
-                </div>
-              </div>
-            ))}
-
-            <blockquote className="p-6 bg-slate-900 text-white rounded-2xl">
-              <p className="italic leading-relaxed text-slate-300">
-                &ldquo;My goal is simple — when your child steps into college, there should be no financial question mark above their head.&rdquo;
-              </p>
-              <footer className="mt-4 font-bold text-emerald-400">— Bipinkumar S. Kuhikar</footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FEATURES ────────────────────────────────────── */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center space-y-4 mb-16 reveal">
-            <p className="text-emerald-600 font-semibold text-sm">What&apos;s included</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">Plan highlights</h2>
-            <p className="text-slate-500 text-lg max-w-xl mx-auto">
-              A closer look at what makes this investment plan right for your family.
+      {/* ── INNOVATION GRID (BENEFITS) ──────────────────── */}
+      <section className="border-y border-slate-200 bg-slate-50 py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="reveal mb-16 text-center">
+            <h2 className="mb-4 text-4xl leading-none font-black tracking-tight text-slate-900">
+              The anatomy of{" "}
+              <span className="text-emerald-600 italic">
+                guaranteed wealth.
+              </span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg font-medium text-slate-500">
+              Professional investment roadmaps designed to fund your
+              child&apos;s specific life goals with total certainty.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, i) => (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {benefits.map((benefit, i) => (
               <div
                 key={i}
-                className="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group reveal"
+                className={`reveal rounded-3xl border bg-white p-6 shadow-sm ${benefit.border} group relative cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl`}
               >
-                <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 transition-colors duration-300">
-                  <feature.icon className="w-7 h-7 text-emerald-600 group-hover:text-white transition-colors duration-300" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── GROWTH TIMELINE ─────────────────────────────── */}
-      <section className="py-24 bg-emerald-600 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(white_1px,transparent_1px)] bg-[size:28px_28px]" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center space-y-4 mb-20 reveal">
-            <p className="text-emerald-200 font-semibold text-sm">How your investment grows</p>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">Your child&apos;s journey</h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { icon: Heart, stage: "Today", title: "You invest", desc: "Start a small monthly commitment that fits your budget comfortably." },
-              { icon: GraduationCap, stage: "Age 15", title: "School support", desc: "First partial payout helps cover senior secondary school costs." },
-              { icon: TrendingUp, stage: "Age 18", title: "College ready", desc: "Major payout covers full college admission and hostel fees." },
-              { icon: Award, stage: "Age 21+", title: "Final payout", desc: "Remaining corpus for post-graduate studies or a career head start." },
-            ].map((step, i) => (
-              <div key={i} className="text-center space-y-5 reveal group">
-                <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto group-hover:bg-white/30 transition-colors">
-                  <step.icon className="w-8 h-8 text-white" />
-                </div>
-                <span className="inline-block px-4 py-1 bg-white/20 text-emerald-100 rounded-full text-xs font-bold">{step.stage}</span>
-                <div className="space-y-2">
-                  <h4 className="text-xl font-bold">{step.title}</h4>
-                  <p className="text-emerald-200 text-sm leading-relaxed">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAQ + CTA ────────────────────────────────────── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16">
-
-          {/* FAQ */}
-          <div className="space-y-8 reveal">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-emerald-500" />
-                <p className="text-emerald-600 font-semibold text-sm">Common questions</p>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">Things people ask</h2>
-            </div>
-
-            <div className="space-y-4">
-              {faq.map((item, i) => (
                 <div
-                  key={i}
-                  className="p-6 bg-slate-50 border border-slate-100 rounded-2xl hover:border-emerald-200 hover:bg-emerald-50/30 transition-all group cursor-default"
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors pr-4">{item.q}</h4>
-                    <ChevronDown className="w-4 h-4 text-slate-300 group-hover:text-emerald-500 shrink-0 transition-colors" />
+                  className={`absolute -top-4 -right-4 h-24 w-24 rounded-full ${benefit.bg} opacity-50 transition-transform duration-500 group-hover:scale-150`}
+                ></div>
+                <div className="relative z-10 mb-6 flex items-center gap-4">
+                  <div
+                    className={`h-14 w-14 rounded-2xl ${benefit.bg} ${benefit.color} flex items-center justify-center shadow-inner`}
+                  >
+                    <benefit.icon size={32} />
                   </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">{item.a}</p>
+                  <h3 className="text-xl font-bold tracking-tight text-slate-900">
+                    {benefit.title}
+                  </h3>
                 </div>
-              ))}
+                <div className="relative z-10 space-y-3">
+                  <div className="flex gap-1">
+                    <div className="relative h-12 flex-1 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
+                      <div className="absolute bottom-0 left-2 h-[30%] w-2 rounded-t-sm bg-slate-200 transition-all duration-700 group-hover:h-[60%]"></div>
+                      <div className="absolute bottom-0 left-5 h-[80%] w-2 rounded-t-sm bg-slate-200 transition-all duration-700 group-hover:h-[40%]"></div>
+                      <div className="absolute bottom-0 left-8 h-[50%] w-2 rounded-t-sm bg-slate-200 transition-all duration-700 group-hover:h-[90%]"></div>
+                    </div>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-100 bg-slate-50">
+                      <ArrowRight
+                        size={16}
+                        className={`text-slate-300 transition-colors ${benefit.accent}`}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── IRDA CERTIFICATION (TACTILE DOCUMENT) ────────── */}
+      <section className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 md:grid-cols-2">
+        <div className="reveal space-y-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-bold tracking-wide text-slate-600 uppercase shadow-sm">
+            <ShieldCheck size={12} className="text-emerald-500" /> Regulatory
+            compliance
+          </div>
+          <h2 className="text-4xl leading-[0.9] font-black tracking-tighter text-slate-900 md:text-5xl">
+            Professional license by <br />{" "}
+            <span className="text-emerald-600 italic">Irda of India.</span>
+          </h2>
+          <p className="text-lg leading-relaxed font-medium text-slate-500">
+            Every investment recommendation is backed by a professional license,
+            ensuring your advice is compliant with Indian financial regulations
+            and legal standards.
+          </p>
+        </div>
+
+        <div className="reveal group relative">
+          <div className="relative overflow-hidden rounded-[2.5rem] border-2 border-slate-100 bg-white p-10 shadow-2xl transition-all duration-500 hover:scale-[1.01]">
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-slate-200 bg-slate-50">
+                <Stamp className="h-8 w-8 text-slate-300" />
+              </div>
+              <h3 className="mb-2 font-serif text-2xl font-black tracking-tight text-slate-900 italic">
+                Advisor certificate
+              </h3>
+              <p className="mb-8 px-8 text-sm font-medium text-slate-400">
+                Confirmed: Bipinkumar Kuhikar is a licensed Investment advisor
+                with Irda and Lic.
+              </p>
+              <div className="flex w-full items-center justify-between rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                  </span>
+                  <span className="font-mono text-[10px] font-bold tracking-tighter text-emerald-700 uppercase">
+                    License: Active
+                  </span>
+                </div>
+                <div className="font-mono text-[10px] font-black tracking-widest text-slate-300">
+                  REG: 9824215296
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* CTA card */}
-          <div className="reveal">
-            <div className="bg-slate-900 rounded-3xl p-10 h-full flex flex-col justify-between gap-10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full translate-x-1/3 -translate-y-1/3" />
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full -translate-x-1/3 translate-y-1/3" />
-
-              <div className="relative z-10 space-y-6">
-                <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
-                  <Sparkles className="w-7 h-7 text-emerald-400" />
+      {/* ── ABOUT ADVISOR ────────────────────────────────── */}
+      <section
+        id="about"
+        className="mx-auto my-12 grid max-w-7xl items-center gap-16 rounded-[4rem] bg-white px-6 py-24 md:grid-cols-2"
+      >
+        <div className="reveal order-2 md:order-1">
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-2 shadow-2xl transition-all hover:scale-[1.01]">
+            <div className="rounded-[2.2rem] bg-slate-900 p-8 text-white md:p-12">
+              <div className="mb-8 flex items-center gap-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500 shadow-lg shadow-emerald-500/20">
+                  <UserCheck size={32} className="text-white" />
                 </div>
-                <h3 className="text-3xl font-extrabold text-white leading-tight tracking-tight">
-                  Ready to secure your child&apos;s future?
-                </h3>
-                <p className="text-slate-400 text-base leading-relaxed">
-                  Get a personalised plan illustration sent to you — completely free, no obligations. Just a conversation about what matters most.
+                <div>
+                  <h3 className="text-2xl leading-tight font-black tracking-tighter">
+                    Bipinkumar Kuhikar
+                  </h3>
+                  <p className="font-mono text-[10px] font-bold tracking-widest text-emerald-400 uppercase">
+                    Investment advisor
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <Calendar className="mb-2 text-emerald-400" size={14} />
+                    <p className="text-[9px] font-black text-slate-400 uppercase">
+                      Consultancy
+                    </p>
+                    <p className="text-base font-bold italic">10+ Years</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <Briefcase className="mb-2 text-emerald-400" size={14} />
+                    <p className="text-[9px] font-black text-slate-400 uppercase">
+                      Portfolio
+                    </p>
+                    <p className="text-base font-bold italic">Hundreds</p>
+                  </div>
+                </div>
+                <div className="space-y-3 border-t border-white/10 pt-4 font-mono text-[10px] text-slate-300">
+                  <div className="flex justify-between tracking-tighter uppercase">
+                    <span>Irda_certification</span>
+                    <span className="font-bold text-white">Verified</span>
+                  </div>
+                  <div className="flex justify-between tracking-tighter uppercase">
+                    <span>Advisor_tier</span>
+                    <span className="font-bold text-emerald-400 uppercase">
+                      Senior
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="reveal order-1 space-y-8 md:order-2">
+          <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold tracking-wide text-slate-600 uppercase">
+            <UserCheck size={12} className="text-emerald-600" /> Professional
+            profile
+          </div>
+          <h2 className="text-4xl leading-[0.9] font-black tracking-tighter text-slate-900 md:text-5xl">
+            Guidance based on <br />{" "}
+            <span className="text-emerald-600 italic">total integrity.</span>
+          </h2>
+          <p className="text-lg leading-relaxed font-medium text-slate-500 italic">
+            For over a decade, I have focused on providing transparent
+            investment roadmaps that ensure children have the financial freedom
+            to pursue their professional dreams.
+          </p>
+          <div className="space-y-5">
+            <div className="flex items-start gap-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-50 shadow-inner">
+                <MapPin size={20} className="text-emerald-600" />
+              </div>
+              <div>
+                <p className="font-bold text-slate-900">
+                  Digital-first consultations
+                </p>
+                <p className="text-sm font-medium text-slate-400">
+                  Serving families across India with secure remote planning and
+                  doorstep support.
                 </p>
               </div>
-
-              <div className="relative z-10 space-y-3">
-                <a
-                  href="tel:+919824215296"
-                  className="w-full flex items-center justify-center gap-3 py-4 bg-emerald-500 text-white rounded-2xl font-bold text-base hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/20"
-                >
-                  <Phone className="w-5 h-5" /> Call +91 98242 15296
-                </a>
-                <a
-                  href="mailto:bipinkuhikar@gmail.com"
-                  className="w-full flex items-center justify-center gap-3 py-4 border border-slate-700 text-slate-300 rounded-2xl font-semibold text-sm hover:border-emerald-500 hover:text-emerald-400 transition-all"
-                >
-                  <Mail className="w-4 h-4" /> bipinkuhikar@gmail.com
-                </a>
-              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA SECTION ─────────────────────────────────── */}
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="group relative space-y-8 overflow-hidden rounded-[3rem] border border-slate-200 bg-white p-12 text-center shadow-2xl transition-all hover:shadow-emerald-100 md:p-20">
+          <div className="pointer-events-none absolute top-10 left-10 rotate-12 opacity-[0.03]">
+            <ShieldCheck size={300} />
+          </div>
+          <div className="relative z-10 space-y-4">
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[10px] font-black tracking-widest text-emerald-600 uppercase">
+              <Plus size={10} /> Contact the advisor
+            </div>
+            <h2 className="text-4xl leading-none font-black tracking-tighter text-slate-900 md:text-6xl">
+              Don&apos;t leave your child&apos;s <br /> future to{" "}
+              <span className="text-emerald-600 underline decoration-slate-200 underline-offset-8">
+                chance.
+              </span>
+            </h2>
+            <p className="mx-auto max-w-lg leading-relaxed font-medium text-slate-500">
+              Get a personalized investment illustration sent to your WhatsApp
+              or email. Professional advice with zero pressure.
+            </p>
+          </div>
+          <div className="relative z-10 flex flex-col justify-center gap-4 pt-4 sm:flex-row">
+            <a
+              href={`tel:${PHONE_NUMBER}`}
+              className="flex items-center justify-center gap-3 rounded-2xl bg-slate-900 px-10 py-5 text-lg font-black text-white shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
+            >
+              <Phone size={20} /> Call +91 98242 15296
+            </a>
+            <a
+              href={`mailto:${EMAIL_ADDRESS}`}
+              className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-10 py-5 text-lg font-black text-slate-900 transition-all hover:bg-slate-50 active:scale-95"
+            >
+              <Mail size={20} /> Write to Bipinkumar
+            </a>
           </div>
         </div>
       </section>
 
       {/* ── FOOTER ──────────────────────────────────────── */}
-      <footer className="bg-slate-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
-
-          {/* Top row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-slate-800">
-
-            {/* Brand */}
-            <div className="space-y-5">
+      <footer className="relative overflow-hidden border-t border-slate-100 bg-white pt-16 pb-10">
+        <div className="relative mx-auto max-w-7xl px-6">
+          <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center">
+            <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
-                  <ShieldCheck className="w-5 h-5 text-white" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 shadow-md">
+                  <ShieldCheck className="h-5 w-5 text-white" />
                 </div>
-                <span className="font-bold text-lg leading-none">Bipinkumar Kuhikar</span>
+                <div>
+                  <p className="text-base leading-none font-black tracking-tight text-slate-900">
+                    Bipinkumar Kuhikar
+                  </p>
+                  <p className="text-[10px] font-semibold text-emerald-600 italic">
+                    Investment advisor
+                  </p>
+                </div>
               </div>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Helping families across India secure their children&apos;s dreams with trusted LIC plans since 2014.
-              </p>
             </div>
 
-            {/* Contact */}
-            <div className="space-y-5">
-              <h4 className="font-semibold text-slate-300 text-sm uppercase tracking-wide">Contact</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="tel:+919824215296" className="flex items-center gap-3 text-slate-400 hover:text-emerald-400 transition-colors text-sm font-medium">
-                    <Phone className="w-4 h-4 shrink-0" /> +91 98242 15296
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:bipinkuhikar@gmail.com" className="flex items-center gap-3 text-slate-400 hover:text-emerald-400 transition-colors text-sm font-medium">
-                    <Mail className="w-4 h-4 shrink-0" /> bipinkuhikar@gmail.com
-                  </a>
-                </li>
-                <li className="flex items-center gap-3 text-slate-400 text-sm font-medium">
-                  <Landmark className="w-4 h-4 shrink-0" /> LIC of India — Authorised Agent
-                </li>
-              </ul>
-            </div>
-
-            {/* Credentials */}
-            <div className="space-y-5">
-              <h4 className="font-semibold text-slate-300 text-sm uppercase tracking-wide">Credentials</h4>
-              <ul className="space-y-3">
-                {[
-                  "IRDA Reg. #9122-94",
-                  "LIC Authorised Advisor",
-                  "10+ Years in Practice",
-                  "500+ Policies Issued",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-slate-400">
-                    <BadgeCheck className="w-4 h-4 text-emerald-500 shrink-0" /> {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="space-y-2">
+              <a
+                href={`tel:${PHONE_NUMBER}`}
+                className="flex items-center gap-2 text-sm font-bold text-slate-700 transition-colors hover:text-emerald-600"
+              >
+                <Phone size={14} /> +91 98242 15296
+              </a>
+              <a
+                href={`mailto:${EMAIL_ADDRESS}`}
+                className="flex items-center gap-2 text-sm font-bold text-slate-700 transition-colors hover:text-emerald-600"
+              >
+                <Mail size={14} /> bipinkuhikar@gmail.com
+              </a>
             </div>
           </div>
-
-          {/* Bottom row */}
-          <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 text-xs">
-            <p>© 2026 Bipinkumar S. Kuhikar. All rights reserved.</p>
-            <p className="text-center leading-relaxed max-w-sm">
-              *Returns are projected estimates based on historical LIC bonus data. Tax benefits are subject to applicable laws. Insurance is the subject matter of solicitation.
+          <div className="my-10 h-px w-full bg-slate-100" />
+          <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+            <p className="text-[11px] leading-relaxed font-medium text-slate-400 italic">
+              Disclaimer: Returns shown are based on historical Lic bonus data.
+              Insurance and investments are subjects of solicitation.
+            </p>
+            <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+              © {new Date().getFullYear()} Bipinkumar Kuhikar
             </p>
           </div>
         </div>
       </footer>
     </div>
-  );
+  )
 }
